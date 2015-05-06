@@ -25,12 +25,12 @@ angular.module('your_app_name.controllers', [])
 	};
 
 	$scope.doLogIn = function(){
-		$state.go('app.feeds-categories');
+		$state.go('app.main');
 	};
 
 	$scope.user = {};
 
-	$scope.user.email = "john@doe.com";
+	$scope.user.email = "cassie@gmail.com";
 	$scope.user.pin = "12345";
 
 	// We need this for the form validation
@@ -48,7 +48,7 @@ angular.module('your_app_name.controllers', [])
 	$scope.user.email = "john@doe.com";
 
 	$scope.doSignUp = function(){
-		$state.go('app.feeds-categories');
+		$state.go('app.main');
 	};
 
 	$scope.goToLogIn = function(){
@@ -58,7 +58,7 @@ angular.module('your_app_name.controllers', [])
 
 .controller('ForgotPasswordCtrl', function($scope, $state) {
 	$scope.recoverPassword = function(){
-		$state.go('app.feeds-categories');
+		$state.go('app.main');
 	};
 
 	$scope.goToLogIn = function(){

@@ -65,7 +65,39 @@ angular.module('your_app_name', ['ionic', 'angularMoment', 'your_app_name.contro
     templateUrl: "side-menu.html",
     controller: 'AppCtrl'
   })
+  
+  //MAIN
+  .state('app.main', {
+    url: "/main",
+    views: {
+      'menuContent': {
+        templateUrl: "main.html",
+        controller: 'MainCtrl'
+      }
+    }
+  })
+  
 
+
+  .state('app.tinder-cards', {
+    url: "/layouts/tinder-cards",
+    views: {
+      'menuContent': {
+        templateUrl: "tinder-cards.html",
+        controller: 'TinderCardsCtrl'
+      }
+    }
+  })
+
+  .state('app.slider', {
+    url: "/layouts/slider",
+    views: {
+      'menuContent': {
+        templateUrl: "slider.html",
+        controller: 'SliderCtrl'
+      }
+    }
+  })
 
 
   //MISCELLANEOUS
