@@ -1,0 +1,11 @@
+<ion-view>
+    <ion-nav-title>
+        <span>Camera Tool</span>
+    </ion-nav-title>
+    <ion-content>
+        <div ng-controller="CameraCtrl" class="has-header">
+            <button ng-click="getPhoto()" class="button button-block button-primary">Start Video</button>
+            <img ng-src="{{lastPhoto}}" style="max-width: 100%">
+        </div>
+    </ion-content>
+</ion-view>
