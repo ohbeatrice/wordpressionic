@@ -64,7 +64,7 @@
         line-height: 90%;
         text-align: center;
         border: 1px solid #d9d9d9;
-        padding: 5px 40px;
+        padding: 15px;
         background: rgba(11, 33, 42, 0.42);
         /* border-radius: 25px; */
         line-height: .3;
@@ -90,6 +90,11 @@
         max-width: 640px;
         margin: auto;
         text-align: center;
+        img {
+            width: 70px;
+            margin-left: 4px;
+            cursor: pointer;
+        }
     }
 
     #items li {
