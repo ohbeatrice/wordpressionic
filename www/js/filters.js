@@ -1,5 +1,5 @@
 
-angular.module('your_app_name.filters', [])
+angular.module('telling_app.filters', [])
 
 .filter('rawHtml', ['$sce', function($sce){
   return function(val) {

@@ -35,6 +35,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 @import "scss/miscellaneous";
 @import "scss/maps";
 @import "scss/image-picker";
+@import "scss/main";
 
 @import "scss/feeds-categories";
 @import "scss/category-feeds";
@@ -47,7 +48,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 @import "scss/wordpress";
 @import "scss/wordpress-post";
+@import "scss/audio-capture";
 
 @import "scss/layouts";
 @import "scss/tinder-cards";
+@import "scss/pyramid";
 @import "scss/slider";

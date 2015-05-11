@@ -1,6 +1,6 @@
 {
-  "name": "ionFullApp",
-  "app_id": "a2ced682",
+  "name": "TellingApp",
+  "app_id": "0f949e46",
   "gulpStartupTasks": [
     "sass",
     "templatecache",

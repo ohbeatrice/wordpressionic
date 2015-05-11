@@ -3,15 +3,17 @@
 }
 
 // App colors
-$top-bar-bg: $assertive;
-$top-bar-color: #468085;
-$loading-color: #FFFFFF;
+$bluegreen: #468085;
+$white: #eceaea;
+$top-bar-bg: #468085;
+$top-bar-color: $white;
+$loading-color: $white;
 
 $content-bg: #EAEAEA;
 $content-color: #444444;
 $bookmarks-empty-color: #B3B2B2;
-$miscellaneous-icon-color: $assertive;
-$layouts-icon-color: $assertive;
+$miscellaneous-icon-color: $bluegreen;
+$layouts-icon-color: #468085;
 
 
 //Wordpress colors
@@ -20,11 +22,11 @@ $wordpress-heading-color:  #444444;
 
 // Main menu colors
 $main-menu-bg: #444444;
-$main-menu-color: #FFFFFF;
+$main-menu-color: $white;
 
 //Feed entries
 $entry-heading-color: #444444;
-$entry-title-color: #FFFFFF;
+$entry-title-color: $white;
 
 // General reset styles
 *

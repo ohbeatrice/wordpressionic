@@ -1,4 +1,4 @@
-angular.module('your_app_name.controllers', [])
+angular.module('telling_app.controllers', [])
 
 // APP
 .controller('AppCtrl', function($scope) {
@@ -70,6 +70,11 @@ angular.module('your_app_name.controllers', [])
 	};
 
 	$scope.user = {};
+})
+
+// Main
+.controller('MainCtrl', function($scope) {
+
 })
 
 // MISCELLANEOUS
@@ -356,37 +361,153 @@ angular.module('your_app_name.controllers', [])
 
 })
 
+.controller('PyramidCtrl', function($scope, $http) {
+    $scope.events=[];
+    $scope.story="";
+    $scope.submit = false;
+    $scope.result = '';
+    $scope.hint = '';
+    $scope.test = ['ev1', 'ev2', 'ev3'];
+    $scope.answer = [];
+    
+    //GET A RANDOM STORY
+    $http.get('http://localhost:3000')
+        .success(function(data) {
+            console.log('getting');
+            $scope.story = data[0].text;
+            $scope.result = data[0].result;
+            $scope.hint = data[0].hint;
+            //get the events with this story id
+            $scope.getEvents(data[0].id);
+        })
+        .error(function(data) {
+            console.log('Error: ' + data);
+        });
+    
+    //GET THE IMPORTANT EVENTS THAT BELONG TO THE STORY
+    $scope.getEvents = function(id) {
+        $http.get('http://localhost:3000/events?id='+id)
+        .success(function(data) {
+            $scope.events = data;
+            $scope.randomize();
+        })
+        .error(function(data) {
+            console.log('Error: ' + data);
+        });
+    };
+    
+    //RANDOMIZE IMPORTANT NEWS EVENTS
+    $scope.randomize = function() {
+        //PICK AN EVENT FROM $SCOPE.EVENTS AT RANDOM
+        $scope.ev1 = $scope.events[Math.floor(Math.random() * $scope.events.length)];
+        //SET THE newIndex VALUE FOR THAT EVENT
+        $scope.ev1.newIndex = 0;
+        //FIND TAHT EVENT IN THE $SCOPE>EVENTS ARRAY
+        var i1 = $scope.events.indexOf($scope.ev1);
+        //REMOVE THAT EVENT FROM TEH ARRAY
+        $scope.events.splice(i1,1);
+        //PICK ANOTHER EVENT FROM $SCOPE.EVENTS AT RANDOM
+        $scope.ev2 = $scope.events[Math.floor(Math.random() * $scope.events.length)];
+        //SET THE newIndex VALUE FOR THAT EVENT
+        $scope.ev2.newIndex = 1;
+        //REMOVE THAT EVENT FROM THE ARRAY
+        var i2 = $scope.events.indexOf($scope.ev2);
+        //REMOVE THAT EVENT FROM THE ARRAY
+        $scope.events.splice(i2,1);
+        //ADD THE REMAINING EVENT
+        $scope.ev3 = $scope.events[0];  
+        $scope.ev3.newIndex = 2;
+        
+        //ADD THE EVENTS TO THE ANSWER ARRAY
+        $scope.answer = [$scope.ev1,$scope.ev2,$scope.ev3];
+        //SORT THE ARRAY BY THE EVENT VALUES
+        $scope.answer.sort(function (a, b) {
+            if (a.val > b.val) {
+                return 1;
+            }
+            if (a.val < b.val) {
+                return -1;
+            }
+            // a must be equal to b
+            return 0;
+        });
+        //THIS SORTED LIST IS THE ANSWER KEY FOR THIS PROBLEM
+        $scope.answer = ['ev'+($scope.answer[0].newIndex+1),'ev'+($scope.answer[1].newIndex+1),'ev'+($scope.answer[2].newIndex+1)];
+        return;
+    };
+    
+    //CHECK THE TEST AGAINST THE ANSWER KEY AND ISSUE RESULTS
+    $scope.go = function() {
+        for (var i=0; i<2; i++){
+            //IF ANY ANSWERS DON'T MATCH THAN IT IS WRONG    
+            if ($scope.test[i] != $scope.answer[i]) {
+                $scope.message = $scope.hint;
+            } else {
+                //IF ALL ANSWERS MATCH THEN IT IS CORRECT
+                $scope.message = $scope.result;
+            } 
+            $scope.submit = true;
+        }
+    };
+    
+    //SORTABLE DRAG AND DROP FUNCTIONS
+    var el = document.getElementById('items');
+    var sortable = Sortable.create(el, {
+        
+        onUpdate: function (evt) {
+            //SET THE NEW ORDER FOR THE TEST
+            $scope.test = [evt.target.children[0].id,evt.target.children[1].id,evt.target.children[2].id];
+            //CHANGE THE newIndex VALUE OF THE EVENT THAT WAS JUST MOVED
+            if(evt.item.id == 'ev1')
+                $scope.ev1.newIndex = evt.newIndex;
+            if(evt.item.id == 'ev2')
+                $scope.ev2.newIndex = evt.newIndex;
+            if(evt.item.id == 'ev3')
+                $scope.ev3.newIndex = evt.newIndex;
+        }
+    });
+})
+
+.service('FeedService',['$http',function($http){
+    return {
+        parseFeed : function(url){
+            return $http.jsonp('//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=50&callback=JSON_CALLBACK&q=' + encodeURIComponent(url));
+        }
+    };
+}])
+
+
 // TINDER CARDS
-.controller('TinderCardsCtrl', function($scope, $http) {
+.controller('TinderCardsCtrl', ['$scope', '$http', 'FeedService', function($scope, $http, Feed) {
 
-	$scope.cards = [];
+	$scope.cards = [
+  { title: 'Why I could do without Mothers Day', image: '../img/opinion1.png' },
+    { title: 'Record Storms Across State', image: '../img/news1.png' },
+    { title: 'Where is the best ice cream?', image: '../img/opinion2.png' },
+    { title: 'Scientists find distant glaxy', image: '../img/news2.png' },
+    { title: 'What kind of clouds are these?', image: 'img/news3.png' }
+];
+    
 
-
-	$scope.addCard = function(img, name) {
-		var newCard = {image: img, name: name};
+	$scope.addCard = function(title, image) {
+		var newCard = {title: title, image: image};
 		newCard.id = Math.random();
 		$scope.cards.unshift(angular.extend({}, newCard));
 	};
-
+    
 	$scope.addCards = function(count) {
-		$http.get('http://api.randomuser.me/?results=' + count).then(function(value) {
-			angular.forEach(value.data.results, function (v) {
-				$scope.addCard(v.user.picture.large, v.user.name.first + " " + v.user.name.last);
-			});
-		});
-	};
-
-	$scope.addFirstCards = function() {
-		$scope.addCard("https://dl.dropboxusercontent.com/u/30675090/envato/tinder-cards/left.png","Nope");
-		$scope.addCard("https://dl.dropboxusercontent.com/u/30675090/envato/tinder-cards/right.png", "Yes");
-	};
-
-	$scope.addFirstCards();
+        $http.get("https://news.google.com/news?q=opinion&output=rss" + count).then(function(value) {
+ angular.forEach(value.data.results, function (v) {
+   $scope.addCard(v.title, v.image);
+ });
+  });
+};
+        
+	
 	$scope.addCards(5);
 
 	$scope.cardDestroyed = function(index) {
 		$scope.cards.splice(index, 1);
-		$scope.addCards(1);
 	};
 
 	$scope.transitionOut = function(card) {
@@ -402,7 +523,7 @@ angular.module('your_app_name.controllers', [])
 		console.log('card removed to the left');
 		console.log(card);
 	};
-})
+}])
 
 
 // BOOKMARKS
@@ -537,4 +658,63 @@ angular.module('your_app_name.controllers', [])
 
 })
 
-;
+// AUDIO CAPTURE
+.controller('AudioCtrl', function($scope) {
+    $scope.captureAudio = function () {
+        // Launch device audio recording application,
+        // allowing user to capture up to 2 audio clips
+        console.log('foo');
+        navigator.device.capture.captureAudio(captureSuccess, captureError, {limit: 2});
+    };
+})
+
+.controller('CameraCtrl', function($scope) {
+     $scope.captureSuccess = function (mediaFiles) {
+        var i, len;
+        for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+            uploadFile(mediaFiles[i]);
+        }
+    };
+
+    // Called if something bad happens.
+    //
+    $scope.captureError = function (error) {
+        var msg = 'An error occurred during capture: ' + error.code;
+        navigator.notification.alert(msg, null, 'Uh oh!');
+    };
+
+    // A button will call this function
+    //
+    
+    // Upload files to server
+    $scope.uploadFile = function (mediaFile) {
+        var ft = new FileTransfer(),
+            path = mediaFile.fullPath,
+            name = mediaFile.name;
+
+        ft.upload(path,
+            "/upload.php",
+            function(result) {
+                console.log('Upload success: ' + result.responseCode);
+                console.log(result.bytesSent + ' bytes sent');
+            },
+            function(error) {
+                console.log('Error uploading file ' + path + ': ' + error.code);
+            },
+            { fileName: name });
+    };
+
+    /*$scope.getPhoto = function() {
+        Camera.getPicture().then(function(imageURI) {
+          console.log(imageURI);
+            $scope.lastPhoto = imageURI;
+        }, function(err) {
+          console.err(err);
+        }, {
+          quality: 75,
+          targetWidth: 320,
+          targetHeight: 320,
+          saveToPhotoAlbum: false
+        });
+    };*/
+});

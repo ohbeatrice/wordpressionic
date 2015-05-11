@@ -1,4 +1,4 @@
-angular.module('your_app_name.factories', [])
+angular.module('telling_app.factories', [])
 
 .factory('FeedLoader', function ($resource){
   return $resource('http://ajax.googleapis.com/ajax/services/feed/load', {}, {
