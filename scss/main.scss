@@ -6,6 +6,23 @@ ion-content {
     -moz-background-size: cover;
     background-size: cover;
 }
+
+ion-content.main {
+    
+    background: url("../img/bg-5.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+ion-content.reportingtools {
+    
+    background: url("../img/bg-5.png") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
 .menu {
     ion-content {
         background: none;

@@ -1,3 +1,9 @@
+Version 1.2
+
+## Misc
+- Improved and ease build process
+- Update Ionic Version to v.1.0.0
+
 Version 1.1
 
 ## New Features
