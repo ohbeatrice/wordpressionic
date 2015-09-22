@@ -1,11 +1,11 @@
 angular.module('telling_app.controllers', [])
 
 // APP
-.controller('AppCtrl', function($scope) {
+.controller('AppCtrl', ['$scope', function($scope) {
 
-})
+}])
 // WALKTHROUGH
-.controller('WalkthroughCtrl', function($scope, $state) {
+.controller('WalkthroughCtrl', ['$scope', '$state', function($scope, $state) {
 	$scope.goToLogIn = function(){
 		$state.go('login');
 	};
@@ -13,9 +13,9 @@ angular.module('telling_app.controllers', [])
 	$scope.goToSignUp = function(){
 		$state.go('signup');
 	};
-})
+}])
 
-.controller('LoginCtrl', function($scope, $state, $templateCache, $q, $rootScope) {
+.controller('LoginCtrl', ['$scope', '$state', '$templateCache', '$q', '$rootScope', function($scope, $state, $templateCache, $q, $rootScope) {
 	$scope.goToSignUp = function(){
 		$state.go('signup');
 	};
@@ -40,9 +40,9 @@ angular.module('telling_app.controllers', [])
 		$scope.selected_tab = data.title;
 	});
 
-})
+}])
 
-.controller('SignupCtrl', function($scope, $state) {
+.controller('SignupCtrl', ['$scope', '$state', function($scope, $state) {
 	$scope.user = {};
 
 	$scope.user.email = "john@doe.com";
@@ -54,9 +54,9 @@ angular.module('telling_app.controllers', [])
 	$scope.goToLogIn = function(){
 		$state.go('login');
 	};
-})
+}])
 
-.controller('ForgotPasswordCtrl', function($scope, $state) {
+.controller('ForgotPasswordCtrl', ['$scope', '$state', function($scope, $state) {
 	$scope.recoverPassword = function(){
 		$state.go('app.main');
 	};
@@ -70,19 +70,19 @@ angular.module('telling_app.controllers', [])
 	};
 
 	$scope.user = {};
-})
+}])
 
 // Main
-.controller('MainCtrl', function($scope) {
+.controller('MainCtrl', ['$scope', function($scope) {
 
-})
+}])
 
 // MISCELLANEOUS
-.controller('MiscellaneousCtrl', function($scope) {
+.controller('MiscellaneousCtrl', ['$scope', function($scope) {
 
-})
+}])
 
-.controller('RateApp', function($scope) {
+.controller('RateApp', ['$scope', function($scope) {
 	$scope.rateApp = function(){
 		if(ionic.Platform.isIOS()){
 			//you need to set your own ios app id
@@ -94,9 +94,9 @@ angular.module('telling_app.controllers', [])
 			AppRate.promptForRating(true);
 		}
 	};
-})
+}])
 
-.controller('SendMailCtrl', function($scope) {
+.controller('SendMailCtrl', ['$scope', function($scope) {
 	$scope.sendMail = function(){
 		cordova.plugins.email.isAvailable(
 			function (isAvailable) {
@@ -111,9 +111,9 @@ angular.module('telling_app.controllers', [])
 			}
 		);
 	};
-})
+}])
 
-.controller('MapsCtrl', function($scope, $ionicLoading) {
+.controller('MapsCtrl', ['$scope', '$ionicLoading', function($scope, $ionicLoading) {
 
 	$scope.info_position = {
 		lat: 43.07493,
@@ -148,9 +148,9 @@ angular.module('telling_app.controllers', [])
 			$ionicLoading.hide();
 		});
 	};
-})
+}])
 
-.controller('AdsCtrl', function($scope, $ionicActionSheet, AdMob, iAd) {
+.controller('AdsCtrl', ['$scope', '$ionicActionSheet', 'AdMob', 'iAd', function($scope, $ionicActionSheet, AdMob, iAd) {
 
 	$scope.manageAdMob = function() {
 
@@ -225,26 +225,26 @@ angular.module('telling_app.controllers', [])
 			}
 		});
 	};
-})
+}])
 
-.controller('InAppBrowserCtrl', function($scope) {
+.controller('InAppBrowserCtrl', ['$scope', function($scope) {
 	$scope.openBrowser = function(){
 		window.open('http://www.google.com', '_blank', 'location=yes');
 	};
-})
+}])
 
 // FEED
 //brings all feed categories
-.controller('FeedsCategoriesCtrl', function($scope, $http) {
+.controller('FeedsCategoriesCtrl', ['$scope', '$http', function($scope, $http) {
 	$scope.feeds_categories = [];
 
 	$http.get('feeds-categories.json').success(function(response) {
 		$scope.feeds_categories = response;
 	});
-})
+}])
 
 //bring specific category providers
-.controller('CategoryFeedsCtrl', function($scope, $http, $stateParams) {
+.controller('CategoryFeedsCtrl', ['$scope', '$http', '$stateParams', function($scope, $http, $stateParams) {
 	$scope.category_sources = [];
 
 	$scope.categoryId = $stateParams.categoryId;
@@ -254,10 +254,10 @@ angular.module('telling_app.controllers', [])
 		$scope.categoryTitle = category.title;
 		$scope.category_sources = category.feed_sources;
 	});
-})
+}])
 
 //this method brings posts for a source provider
-.controller('FeedEntriesCtrl', function($scope, $stateParams, $http, FeedList, $q, $ionicLoading, BookMarkService) {
+.controller('FeedEntriesCtrl', ['$scope', '$stateParams', '$http', 'FeedList', '$q', '$ionicLoading', 'BookMarkService', function($scope, $stateParams, $http, FeedList, $q, $ionicLoading, BookMarkService) {
 	$scope.feed = [];
 
 	var categoryId = $stateParams.categoryId,
@@ -298,16 +298,16 @@ angular.module('telling_app.controllers', [])
 		$ionicLoading.show({ template: 'Post Saved!', noBackdrop: true, duration: 1000 });
 		BookMarkService.bookmarkFeedPost(post);
 	};
-})
+}])
 
 
 // Multimedia
-.controller('MultimediaCtrl', function($scope) {
+.controller('MultimediaCtrl', ['$scope', function($scope) {
 
-})
+}])
 
 // SETTINGS
-.controller('SettingsCtrl', function($scope, $ionicActionSheet, $state) {
+.controller('SettingsCtrl', ['$scope', '$ionicActionSheet', '$state', function($scope, $ionicActionSheet, $state) {
 	$scope.airplaneMode = true;
 	$scope.wifi = false;
 	$scope.bluetooth = true;
@@ -349,19 +349,19 @@ angular.module('telling_app.controllers', [])
 		});
 
 	};
-})
+}])
 
 // FORMS
-.controller('FormsCtrl', function($scope) {
+.controller('FormsCtrl', ['$scope', function($scope) {
 
-})
+}])
 
 // PROFILE
-.controller('ProfileCtrl', function($scope) {
+.controller('ProfileCtrl', ['$scope', function($scope) {
 
-})
+}])
 
-.controller('PyramidCtrl', function($scope, $http) {
+.controller('PyramidCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.events=[];
     $scope.story="";
     $scope.submit = false;
@@ -466,7 +466,7 @@ angular.module('telling_app.controllers', [])
                 $scope.ev3.newIndex = evt.newIndex;
         }
     });
-})
+}])
 
 .service('FeedService',['$http',function($http){
     return {
@@ -478,33 +478,50 @@ angular.module('telling_app.controllers', [])
 
 
 // TINDER CARDS
-.controller('TinderCardsCtrl', ['$scope', '$http', 'FeedService', function($scope, $http, Feed) {
-
-	$scope.cards = [
-  { title: 'Why I could do without Mothers Day', image: '../img/opinion1.png' },
-    { title: 'Record Storms Across State', image: '../img/news1.png' },
-    { title: 'Where is the best ice cream?', image: '../img/opinion2.png' },
-    { title: 'Scientists find distant glaxy', image: '../img/news2.png' },
-    { title: 'What kind of clouds are these?', image: 'img/news3.png' }
-];
+.controller('TinderCardsCtrl', ['$scope', '$http', 'NytOpinion', 'NytWorld', function($scope, $http, NytOpinion, NytWorld) {
+     $scope.cards = [];
+     var resp = [];
+     $scope.score = 0;
+     $scope.total = 10;
+     $scope.turn = 0;
+     NytOpinion.get(function(data){
+        resp = data.results;
+        $scope.addCards(resp.length, 'op');
+    }); 
+    NytWorld.get(function(data){
+        resp = data.results;
+        $scope.addCards(resp.length, 'world');
+    }); 
     
+    $scope.addCards = function(count, type) {
+        for (var i = 0; i < 10; i++) {
+            //$scope.addCard($scope.cards[i].headline, $scope.cards[i].lead_paragraph); 
+            if(resp[i].title && resp[i].abstract) {
+                var newCard = {title: resp[i].title, lead: resp[i].abstract, type:type, image:resp[i].multimedia[2]};    
+                $scope.cards.push(newCard);
+            }    
+        }
+        shuffle($scope.cards);
+    };
+    function shuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex ;
 
-	$scope.addCard = function(title, image) {
-		var newCard = {title: title, image: image};
-		newCard.id = Math.random();
-		$scope.cards.unshift(angular.extend({}, newCard));
-	};
-    
-	$scope.addCards = function(count) {
-        $http.get("https://news.google.com/news?q=opinion&output=rss" + count).then(function(value) {
- angular.forEach(value.data.results, function (v) {
-   $scope.addCard(v.title, v.image);
- });
-  });
-};
-        
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+
+      return array;
+    }
 	
-	$scope.addCards(5);
 
 	$scope.cardDestroyed = function(index) {
 		$scope.cards.splice(index, 1);
@@ -515,19 +532,31 @@ angular.module('telling_app.controllers', [])
 	};
 
 	$scope.transitionRight = function(card) {
-		console.log('card removed to the right');
-		console.log(card);
+        //World News
+        if (card.type=='world')
+            {
+                $scope.score++;
+                $scope.turn++;
+            } else {
+                $scope.turn++;
+            }
 	};
 
 	$scope.transitionLeft = function(card) {
-		console.log('card removed to the left');
-		console.log(card);
+        //Opinion
+        if (card.type=='op')
+            {
+                $scope.score++;
+                $scope.turn++;
+            } else {
+                $scope.turn++;
+            }
 	};
 }])
 
 
 // BOOKMARKS
-.controller('BookMarksCtrl', function($scope, $rootScope, BookMarkService, $state) {
+.controller('BookMarksCtrl', ['$scope', '$rootScope', 'BookMarkService', '$state', function($scope, $rootScope, BookMarkService, $state) {
 
 	$scope.bookmarks = BookMarkService.getBookmarks();
 
@@ -542,15 +571,15 @@ angular.module('telling_app.controllers', [])
 	$scope.goToWordpressPost = function(postId){
 		$state.go('app.post', {postId: postId});
 	};
-})
+}])
 
 // SLIDER
-.controller('SliderCtrl', function($scope, $http, $ionicSlideBoxDelegate) {
+.controller('SliderCtrl', ['$scope', '$http', '$ionicSlideBoxDelegate', function($scope, $http, $ionicSlideBoxDelegate) {
 
-})
+}])
 
 // WORDPRESS
-.controller('WordpressCtrl', function($scope, $http, $ionicLoading, PostService, BookMarkService) {
+.controller('WordpressCtrl', ['$scope', '$http', '$ionicLoading', 'PostService', 'BookMarkService', function($scope, $http, $ionicLoading, PostService, BookMarkService) {
 	$scope.posts = [];
 	$scope.page = 1;
 	$scope.totalPages = 1;
@@ -596,10 +625,10 @@ angular.module('telling_app.controllers', [])
 	};
 
 	$scope.doRefresh();
-})
+}])
 
 // WORDPRESS POST
-.controller('WordpressPostCtrl', function($scope, $http, $stateParams, PostService, $ionicLoading) {
+.controller('WordpressPostCtrl', ['$scope', '$http', '$stateParams', 'PostService', '$ionicLoading', function($scope, $http, $stateParams, PostService, $ionicLoading) {
 
 	$ionicLoading.show({
 		template: 'Loading post...'
@@ -615,10 +644,10 @@ angular.module('telling_app.controllers', [])
 	$scope.sharePost = function(link){
 		window.plugins.socialsharing.share('Check this post here: ', null, null, link);
 	};
-})
+}])
 
 
-.controller('ImagePickerCtrl', function($scope, $rootScope, $cordovaCamera) {
+.controller('ImagePickerCtrl', ['$scope', '$rootScope', '$cordovaCamera', function($scope, $rootScope, $cordovaCamera) {
 
 	$scope.images = [];
 
@@ -650,23 +679,23 @@ angular.module('telling_app.controllers', [])
 	$scope.shareAll = function() {
 		window.plugins.socialsharing.share(null, null, $scope.images);
 	};
-})
+}])
 
 
 // LAYOUTS
-.controller('LayoutsCtrl', function($scope) {
+.controller('LayoutsCtrl', ['$scope', function($scope) {
 
-})
+}])
 
 // AUDIO CAPTURE
-.controller('AudioCtrl', function($scope) {
+.controller('AudioCtrl', ['$scope', function($scope) {
     $scope.captureAudio = function () {
         // Launch device audio recording application,
         // allowing user to capture up to 2 audio clips
         console.log('foo');
         navigator.device.capture.captureAudio(captureSuccess, captureError, {limit: 2});
     };
-})
+}])
 .factory('Camera', ['$q', function($q) {
 
   return {

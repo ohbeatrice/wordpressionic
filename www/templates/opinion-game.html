@@ -1,10 +1,11 @@
 <ion-view class="tinder-cards-view">
   <ion-nav-title>
-    <span>Opinion or News?</span>
+    <span>Opinion or Newz?</span>
+    <span>{{score}} / {{total}}</span>
   </ion-nav-title>
   <ion-content scroll="false">
     <td-cards>
-      <td-card id="td-card" ng-repeat="card in cards"
+      <td-card class="card" id="td-card" ng-repeat="card in cards"
       on-transition-left="transitionLeft(card)"
       on-transition-right="transitionRight(card)"
       on-transition-out="transitionOut(card)"
@@ -12,13 +13,13 @@
       on-swipe-left="cardSwipedLeft($index)"
       on-swipe-right="cardSwipedRight($index)"
       on-partial-swipe="cardPartialSwipe(amt)">
-        <div class="image">
+        <div class="abstract">
           <div class="no-text overlayBox">
             <div class="noBox boxed">
               Opinion
             </div>
           </div>
-          <img ng-src="{{card.image}}">
+          
           <div class="yes-text overlayBox">
             <div class="yesBox boxed">
               News
@@ -28,6 +29,9 @@
         <div class="title">
           {{card.title}}
         </div>
+      <img class="tinder-image" src="{{card.image.url}}"/>
+      <p>{{card.lead}}</p>
+        
       </td-card>
     </td-cards>
   </ion-content>

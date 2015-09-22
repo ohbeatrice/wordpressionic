@@ -281,16 +281,6 @@ angular.module('telling_app', ['ionic', 'angularMoment', 'telling_app.controller
             }
         }
     })
-    
-    .state('app.wordpresspost', {
-        url: "http://tellingapp.com/tells/wp-admin/",
-        views: {
-            'menuContent': {
-                templateUrl: "http://tellingapp.com/tells/wp-admin/",
-                controller: 'WordpressCtrl'
-            }
-        }
-    })
 
     ;
 
