@@ -4,6 +4,13 @@
     <span>{{score}} / {{total}}</span>
   </ion-nav-title>
   <ion-content scroll="false">
+      <span>Drag left for Opinion and right for News.</span>
+      <div class="success" ng-show="rightAnswer">Great Job</div>
+      <div ng-show="gameOver" class="wrong-answers">
+          <ul>
+              <li ng-repeat="story in wrongAnswers"><a href="{{story.url}}">{{story.title}}</a></li>
+          </ul>
+      </div>
     <td-cards>
       <td-card class="card" id="td-card" ng-repeat="card in cards"
       on-transition-left="transitionLeft(card)"

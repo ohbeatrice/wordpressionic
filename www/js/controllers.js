@@ -481,6 +481,8 @@ angular.module('telling_app.controllers', [])
 .controller('TinderCardsCtrl', ['$scope', '$http', 'NytOpinion', 'NytWorld', function($scope, $http, NytOpinion, NytWorld) {
      $scope.cards = [];
      var resp = [];
+     $scope.wrongAnswers = [];
+     $scope.gameOver = false;
      $scope.score = 0;
      $scope.total = 10;
      $scope.turn = 0;
@@ -494,10 +496,10 @@ angular.module('telling_app.controllers', [])
     }); 
     
     $scope.addCards = function(count, type) {
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 5; i++) {
             //$scope.addCard($scope.cards[i].headline, $scope.cards[i].lead_paragraph); 
             if(resp[i].title && resp[i].abstract) {
-                var newCard = {title: resp[i].title, lead: resp[i].abstract, type:type, image:resp[i].multimedia[2]};    
+                var newCard = {title: resp[i].title, lead: resp[i].abstract, type:type, image:resp[i].multimedia[2], url: resp[i].url};    
                 $scope.cards.push(newCard);
             }    
         }
@@ -537,9 +539,14 @@ angular.module('telling_app.controllers', [])
             {
                 $scope.score++;
                 $scope.turn++;
+                $scope.rightAnswer = true;
+                setTimeout($scope.rightAnswer = false, 2000);
             } else {
                 $scope.turn++;
+                $scope.wrongAnswers.push(card);
             }
+        if($scope.turn = $scope.total)
+            $scope.gameOver = true;
 	};
 
 	$scope.transitionLeft = function(card) {
@@ -548,9 +555,14 @@ angular.module('telling_app.controllers', [])
             {
                 $scope.score++;
                 $scope.turn++;
+                $scope.rightAnswer = true;
+                setTimeout($scope.rightAnswer = false, 2000);
             } else {
                 $scope.turn++;
+                $scope.wrongAnswers.push(card);
             }
+        if($scope.turn = $scope.total)
+            $scope.gameOver = true;
 	};
 }])
 

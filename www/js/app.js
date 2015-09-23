@@ -10,6 +10,13 @@ angular.module('underscore', [])
 // the 2nd parameter is an array of 'requires'
 angular.module('telling_app', ['ionic', 'angularMoment', 'telling_app.controllers', 'telling_app.directives', 'telling_app.filters', 'telling_app.services', 'telling_app.factories', 'telling_app.config', 'underscore', 'ngMap', 'ngResource', 'ngCordova', 'templates', 'slugifier', 'ionic.contrib.ui.tinderCards'])
 
+.factory('NytOpinion', ['$resource', function($resource) {
+  return $resource('http://api.nytimes.com/svc/topstories/v1/opinion.json?fields=byline,multimedia,photo&api-key=44ca79c2e333d9b1b559fd181988bf0f:12:72037481');
+}])
+.factory('NytWorld', ['$resource', function($resource) {
+  return $resource('http://api.nytimes.com/svc/topstories/v1/world.json?fields=byline,multimedia,photo&api-key=44ca79c2e333d9b1b559fd181988bf0f:12:72037481');
+}])
+
 .run(function ($ionicPlatform, PushNotificationsService) {
 
     $ionicPlatform.on("deviceready", function () {
